@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Master</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* Clean font */
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4B9FEB, #8A6FDF);
+            min-height: 100vh;
+            background-attachment: fixed;
+            color: #333; /* Improved text color for readability */
+            animation: backgroundAnimation 10s ease infinite; /* Added background animation */
+        }
+        header { /* Slightly more opaque for better contrast */
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 2rem;
+            text-align: center;
+            padding-bottom: 0;
+            margin-bottom: 20px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff, #e6e6e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;   
+            letter-spacing: 1px;
+        }
+        .container {
+            margin: 2rem auto;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 10px; /* Less rounded for a modern look */
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-group {
+            margin-bottom: 2rem; /* Increased margin for better spacing */
+            margin-top: 1rem; /* Added top margin for spacing above the form */
+            margin-left: 1rem; /* Added left margin */
+            margin-right: 1rem; /* Added right margin */
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem; /* Increased padding */
+            border: 1px solid #ccc;
+            border-radius: 25px; /* More rounded input */
+            transition: border-color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #4a90e2; /* Border color on focus */
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Added shadow on focus */
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem; /* Increased padding */
+            color: white;
+            background-color: #5cb85c; /* Green button */
+            border: none;
+            border-radius: 25px; /* More rounded button */
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Added box-shadow transition */
+            font-size: 1rem; /* Increased font size */
+        }
+        .btn:hover {
+            background-color: #4cae4c; /* Darker green on hover */
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Added shadow on hover */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+            border-radius: 10px; /* Rounded corners for table */
+            overflow: hidden; /* To apply border-radius */
+        }
+        th, td {
+            padding: 1rem; /* Increased padding */
+            text-align: left;
+            border: none; /* Removed border for a cleaner look */
+        }
+        th {
+            background-color: #4a90e2; /* Header background color */
+            color: white; /* Header text color */
+            font-weight: bold;
+            border-top-left-radius: 15px; /* Rounded corners for header */
+            border-top-right-radius: 15px; /* Rounded corners for header */
+            border-bottom: 2px solid #ddd; /* Added bottom border for separation */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Lighter alternating row colors */
+        }
+        tr:hover {
+            background-color: #e0e0e0; /* Highlight row on hover */
+        }
+        .delete-btn {
+            color: red;
+            cursor: pointer;
+        }
+        .bordered-container {
+            border: 2px solid #000;
+            padding: 20px;
+            margin: 20px;
+        }
+        /* Enhanced navigation styles */
+        nav {
+            padding: 1.2rem;
+            text-align: center;
+            margin: 0 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.5rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #4B9FEB;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-color: transparent;
+        }
+        nav a.active {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #4B9FEB;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-color: transparent;
+        }
+        nav a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 25px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        nav a:hover::before {
+            opacity: 1;
+        }
+        .section {
+            display: none;
+            padding: 2rem;
+        }
+        .section.active {
+            display: block;
+        }
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(135deg, #4B9FEB, #8A6FDF); }
+            50% { background: linear-gradient(135deg, #8A6FDF, #4B9FEB); }
+            100% { background: linear-gradient(135deg, #4B9FEB, #8A6FDF); }
+        }
+    </style>
+    <title>Contact Form</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // https://dashboard.emailjs.com/admin/account
+            emailjs.init({
+              publicKey: "EMtIZUx7mL_QMz1CX",
+            });
+        })();
+    </script>
+    <script type="text/javascript">
+        window.onload = function() {
+            document.getElementById('contact-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                // these IDs from the previous steps
+                emailjs.sendForm('service_t2d7erm', 'template_7kl7kxm', this)
+                    .then(() => {
+                        console.log('SUCCESS!');
+                    }, (error) => {
+                        console.log('FAILED...', error);
+                    });
+            });
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Billing Master</h1>
+        <nav>
+            <a href="#" onclick="showSection('billing')">Billing</a>
+            <a href="#" onclick="showSection('about')">About</a>
+            <a href="#" onclick="showSection('contact')">Contact Us</a>
+        </nav>
+    </header>
+    <div class="container">
+        <div id="billing" class="section active">
+            <div class="form-group">
+                <label for="shopName">Shop Name</label>
+                <input type="text" id="shopName" required>
+            </div>
+            <div class="form-group">
+                <label for="customerName">Customer Name</label>
+                <input type="text" id="customerName" required>
+            </div>
+            <div class="form-group">
+                <label for="discount">Discount (%)</label>
+                <input type="number" id="discount" value="0" min="0" step="0.01">
+            </div>
+            <form id="billingForm">
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price per Item</label>
+                    <input type="number" id="price" step="0.01" required>
+                </div>
+                <button type="button" class="btn" onclick="addItem()">Add Item</button>
+            </form>
+
+            <h2>Invoice</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="invoiceBody">
+                    <!-- Items will be dynamically added here -->
+                </tbody>
+            </table>
+            <h3>Total Amount: ₹<span id="totalAmount">0.00</span></h3>
+            <h3>Total Discount: ₹<span id="totalDiscount">0.00</span></h3>
+            <h3>Final Bill Amount: ₹<span id="finalBillAmount">0.00</span></h3>
+            <button class="btn" onclick="printBill()">Print Bill</button>
+        </div>
+        
+        <div id="about" class="section">
+            <h2>About Us</h2>
+            <p>Welcome to our Billing System! We provide a simple and efficient way to manage your billing needs.</p>
+            <p>Our system allows you to:</p>
+            <ul>
+                <li>Create detailed invoices</li>
+                <li>Calculate discounts automatically</li>
+                <li>Print bills for your records</li>
+            </ul>
+        </div>
+        
+        <div id="contact" class="section">
+            <h2>Contact Us</h2>
+            <p>Have questions or need support? Reach out to us!</p>
+            <form id="contact-form" class="form-group">
+                <!-- To simplify the tutorial, the value is static. -->
+                <input type="hidden" name="contact_number" value="697483">
+                <label for="user_name">Name</label>
+                <input type="text" name="user_name" required style="margin-bottom: 2rem;">
+                <label for="user_email">Email</label>
+                <input type="email" name="user_email" required style="margin-bottom: 2rem;">
+                <label for="message">Message</label>
+                <textarea name="message" required style="margin-bottom: 1rem;"></textarea>
+                <input type="submit" value="Send" class="btn">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let totalAmount = 0;
+        let totalDiscount = 0;
+
+        function addItem() {
+            const itemName = document.getElementById('itemName').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const price = parseFloat(document.getElementById('price').value);
+            const discount = parseFloat(document.getElementById('discount').value) || 0; // Get discount value
+
+            // Validate inputs
+            if (!itemName || isNaN(quantity) || isNaN(price) || quantity <= 0 || price <= 0) {
+                alert('Please enter valid item details.');
+                return;
+            }
+
+            const total = quantity * price;
+            totalAmount += total;
+
+            // Apply discount
+            const discountAmount = (total * discount) / 100;
+            totalDiscount += discountAmount;
+            const finalTotal = total - discountAmount;
+
+            const tableBody = document.getElementById('invoiceBody');
+            const row = document.createElement('tr');
+
+            row.innerHTML = `
+                <td>${itemName}</td>
+                <td>${quantity}</td>
+                <td>₹ ${price.toFixed(2)}</td>
+                <td>₹ ${discountAmount.toFixed(2)}</td>
+                <td>₹ ${finalTotal.toFixed(2)}</td>
+                <td><span class="delete-btn" onclick="deleteItem(this, ${finalTotal})">Delete</span></td>
+            `;
+
+            tableBody.appendChild(row);
+            document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+            document.getElementById('totalDiscount').innerText = totalDiscount.toFixed(2);
+            document.getElementById('finalBillAmount').innerText = (totalAmount - totalDiscount).toFixed(2);
+            document.getElementById('billingForm').reset(); // Reset the form fields
+        }
+
+        function deleteItem(element, itemTotal) {
+            const row = element.parentElement.parentElement;
+            row.remove();
+            totalAmount -= itemTotal;
+            document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+        }
+
+        function printBill() {
+            const shopName = document.getElementById('shopName').value;
+            const customerName = document.getElementById('customerName').value;
+
+            if (!shopName || !customerName || totalAmount <= 0) {
+                alert('Please fill in all fields and add items.');
+                return;
+            }
+
+            const billContent = `
+                <div style="border: 2px solid #4CAF50; padding: 30px; margin: 20px; border-radius: 10px; background-color: #f9f9f9; font-family: 'Arial', sans-serif;">
+                    <h1 style="text-align: center; color: #4CAF50; margin-bottom: 20px;">${shopName}</h1>
+                    <p style="font-weight: bold; font-size: 1.1rem;">Customer Name: <span style="font-weight: normal;">${customerName}</span></p>
+                    <p style="font-weight: bold; font-size: 1.1rem;">Date: <span style="font-weight: normal;">${new Date().toLocaleString()}</span></p>
+                    <h2 style="text-align: center; color: #333; margin-top: 20px;">Products</h2>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <thead>
+                            <tr style="background-color: #4CAF50; color: white;">
+                                <th style="padding: 12px; border: 1px solid #ddd;">Item Name</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Quantity</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Price</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Discount</th>
+                                <th style="padding: 12px; border: 1px solid #ddd;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${Array.from(document.querySelectorAll('#invoiceBody tr')).map(row => {
+                                const cols = row.querySelectorAll('td');
+                                return `<tr>${Array.from(cols).slice(0, -1).map(col => `<td style="padding: 12px; border: 1px solid #ddd;">${col.innerText}</td>`).join('')}</tr>`;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                    <h3 style="text-align: right; color: #4CAF50; margin-top: 20px;">Total Amount: ₹${totalAmount.toFixed(2)}</h3>
+                    <h3 style="text-align: right; color: #4CAF50;">Total Discount: ₹${totalDiscount.toFixed(2)}</h3>
+                    <h3 style="text-align: right; color: #4CAF50;">Final Bill Amount: ₹${(totalAmount - totalDiscount).toFixed(2)}</h3>
+                </div>
+            `;
+
+            const printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Bill</title>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(billContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active state of navigation links
+            document.querySelectorAll('nav a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick').includes(sectionId)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        function submitContact() {
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('message').value;
+
+            if (!name || !email || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            // You can customize this to handle the contact form submission
+            alert('Thank you for your message! We will get back to you soon.');
+            document.getElementById('contactName').value = '';
+            document.getElementById('contactEmail').value = '';
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+</html>
