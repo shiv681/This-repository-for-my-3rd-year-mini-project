@@ -296,7 +296,7 @@
             const price = parseFloat(document.getElementById('price').value);
             const discount = parseFloat(document.getElementById('discount').value) || 0; // Get discount value
 
-            // Validate inputs
+        
             if (!itemName || isNaN(quantity) || isNaN(price) || quantity <= 0 || price <= 0) {
                 alert('Please enter valid item details.');
                 return;
@@ -305,7 +305,6 @@
             const total = quantity * price;
             totalAmount += total;
 
-            // Apply discount
             const discountAmount = (total * discount) / 100;
             totalDiscount += discountAmount;
             const finalTotal = total - discountAmount;
