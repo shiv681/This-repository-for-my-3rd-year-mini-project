@@ -1,1 +1,1 @@
-# This-repository-for-my-3rd-year-mini-project
+# 3rd-year-mini-project
