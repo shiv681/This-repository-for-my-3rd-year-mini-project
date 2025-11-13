@@ -7,16 +7,16 @@
     <title>Billing Master</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif; /* Clean font */
+            font-family: 'Arial', sans-serif; 
             margin: 0;
             padding: 0;
             background: linear-gradient(135deg, #4B9FEB, #8A6FDF);
             min-height: 100vh;
             background-attachment: fixed;
-            color: #333; /* Improved text color for readability */
-            animation: backgroundAnimation 10s ease infinite; /* Added background animation */
+            color: #333;
+            animation: backgroundAnimation 10s ease infinite;
         }
-        header { /* Slightly more opaque for better contrast */
+        header {
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             padding: 2rem;
@@ -36,71 +36,70 @@
             max-width: 800px;
             background: rgba(255, 255, 255, 0.95);
             padding: 2rem;
-            border-radius: 10px; /* Less rounded for a modern look */
+            border-radius: 10px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .form-group {
-            margin-bottom: 2rem; /* Increased margin for better spacing */
-            margin-top: 1rem; /* Added top margin for spacing above the form */
-            margin-left: 1rem; /* Added left margin */
-            margin-right: 1rem; /* Added right margin */
+            margin-bottom: 2rem;
+            margin-top: 1rem; 
+            margin-left: 1rem; 
+            margin-right: 1rem; 
         }
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 0.75rem; /* Increased padding */
+            padding: 0.75rem; 
             border: 1px solid #ccc;
-            border-radius: 25px; /* More rounded input */
-            transition: border-color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+            border-radius: 25px;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
         .form-group input:focus, .form-group textarea:focus {
-            border-color: #4a90e2; /* Border color on focus */
-            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Added shadow on focus */
-        }
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); 
         .btn {
             display: inline-block;
-            padding: 0.75rem 1.5rem; /* Increased padding */
+            padding: 0.75rem 1.5rem; 
             color: white;
-            background-color: #5cb85c; /* Green button */
+            background-color: #5cb85c; 
             border: none;
-            border-radius: 25px; /* More rounded button */
+            border-radius: 25px;
             cursor: pointer;
             text-decoration: none;
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Added box-shadow transition */
-            font-size: 1rem; /* Increased font size */
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; 
+            font-size: 1rem; 
         }
         .btn:hover {
-            background-color: #4cae4c; /* Darker green on hover */
-            transform: scale(1.05); /* Slightly enlarge on hover */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Added shadow on hover */
+            background-color: #4cae4c; 
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 1rem;
-            border-radius: 10px; /* Rounded corners for table */
-            overflow: hidden; /* To apply border-radius */
+            border-radius: 10px; 
+            overflow: hidden;
         }
         th, td {
-            padding: 1rem; /* Increased padding */
+            padding: 1rem; 
             text-align: left;
-            border: none; /* Removed border for a cleaner look */
+            border: none;
         }
         th {
-            background-color: #4a90e2; /* Header background color */
-            color: white; /* Header text color */
+            background-color: #4a90e2; 
+            color: white; 
             font-weight: bold;
-            border-top-left-radius: 15px; /* Rounded corners for header */
-            border-top-right-radius: 15px; /* Rounded corners for header */
-            border-bottom: 2px solid #ddd; /* Added bottom border for separation */
+            border-top-left-radius: 15px; 
+            border-top-right-radius: 15px;
+            border-bottom: 2px solid #ddd; 
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2; /* Lighter alternating row colors */
+            background-color: #f2f2f2;
         }
         tr:hover {
-            background-color: #e0e0e0; /* Highlight row on hover */
+            background-color: #e0e0e0; 
         }
         .delete-btn {
             color: red;
@@ -111,7 +110,7 @@
             padding: 20px;
             margin: 20px;
         }
-        /* Enhanced navigation styles */
+     
         nav {
             padding: 1.2rem;
             text-align: center;
@@ -177,7 +176,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            // https://dashboard.emailjs.com/admin/account
+           
             emailjs.init({
               publicKey: "EMtIZUx7mL_QMz1CX",
             });
@@ -250,7 +249,7 @@
                     </tr>
                 </thead>
                 <tbody id="invoiceBody">
-                    <!-- Items will be dynamically added here -->
+                    <
                 </tbody>
             </table>
             <h3>Total Amount: ₹<span id="totalAmount">0.00</span></h3>
@@ -274,7 +273,7 @@
             <h2>Contact Us</h2>
             <p>Have questions or need support? Reach out to us!</p>
             <form id="contact-form" class="form-group">
-                <!-- To simplify the tutorial, the value is static. -->
+            
                 <input type="hidden" name="contact_number" value="697483">
                 <label for="user_name">Name</label>
                 <input type="text" name="user_name" required style="margin-bottom: 2rem;">
@@ -385,14 +384,14 @@
         }
 
         function showSection(sectionId) {
-            // Hide all sections
+           
             document.querySelectorAll('.section').forEach(section => {
                 section.classList.remove('active');
             });
-            // Show selected section
+            
             document.getElementById(sectionId).classList.add('active');
             
-            // Update active state of navigation links
+            
             document.querySelectorAll('nav a').forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('onclick').includes(sectionId)) {
@@ -411,7 +410,7 @@
                 return;
             }
 
-            // You can customize this to handle the contact form submission
+           
             alert('Thank you for your message! We will get back to you soon.');
             document.getElementById('contactName').value = '';
             document.getElementById('contactEmail').value = '';
